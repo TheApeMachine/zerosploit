@@ -1,5 +1,6 @@
 extends Spatial
 
+var players      = []
 var console_show = false
 
 func _ready():

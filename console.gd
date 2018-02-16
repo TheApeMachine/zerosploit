@@ -1,22 +1,29 @@
 extends TextEdit
 
-var current_line = 1
 var tokens = {}
 var AST    = []
+var cmd    = ""
 
 func _ready():
 	insert_text_at_cursor(">")
 	
 func _input(event):
 	if Input.is_key_pressed(KEY_ENTER):
-		insert_text_at_cursor("\n")
-		current_line += 1
-		cursor_set_line(current_line)
+		lexer(cmd)
+		cmd = ""
 		insert_text_at_cursor(">")
-		cursor_set_column(2)
+	elif !event.is_pressed() and !event.is_class("InputEventMouseMotion"):
+		var e = event.as_text()
 		
-func lexer():
-	pass
+		if e == 'Space':
+			cmd += ' '
+		elif e == 'BackSpace':
+			cmd = cmd.left(len(cmd) - 1)
+		else:
+			cmd += event.as_text()
+
+func lexer(input):
+	print(input)
 	
 func parser():
 	pass
