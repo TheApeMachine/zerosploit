@@ -1,4 +1,6 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://server.gd" type="Script" id=1]
 
 [sub_resource type="CubeMesh" id=1]
 
@@ -8,6 +10,8 @@ subdivide_height = 0
 subdivide_depth = 0
 
 [node name="Spatial" type="Spatial"]
+
+script = ExtResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="." index="0"]
 
