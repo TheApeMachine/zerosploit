@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://main.gd" type="Script" id=1]
 [ext_resource path="res://Camera.gd" type="Script" id=2]
@@ -84,6 +84,12 @@ adjustment_contrast = 1.0
 adjustment_saturation = 1.0
 _sections_unfolded = [ "Background" ]
 
+[sub_resource type="CanvasItemMaterial" id=2]
+
+render_priority = 0
+blend_mode = 0
+light_mode = 0
+
 [node name="root" type="Spatial" index="0"]
 
 script = ExtResource( 1 )
@@ -120,6 +126,8 @@ script = ExtResource( 3 )
 
 [node name="console" type="TextEdit" parent="." index="2"]
 
+modulate = Color( 1, 1, 1, 0.501961 )
+material = SubResource( 2 )
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -132,6 +140,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
+custom_colors/background_color = Color( 0, 0, 0, 0.602196 )
 text = ""
 readonly = false
 highlight_current_line = false
@@ -144,10 +153,11 @@ smooth_scrolling = false
 v_scroll_speed = 80.0
 hiding_enabled = 0
 wrap_lines = false
-caret_block_mode = false
-caret_blink = false
+caret_block_mode = true
+caret_blink = true
 caret_blink_speed = 0.65
 caret_moving_by_right_click = true
 script = ExtResource( 4 )
+_sections_unfolded = [ "Material", "Visibility" ]
 
 

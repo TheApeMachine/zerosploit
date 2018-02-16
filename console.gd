@@ -2,7 +2,8 @@ extends TextEdit
 
 var cmd      = ""
 var keywords = [
-	'QUIT'
+	'QUIT',
+	'BUILD'
 ]
 
 func _ready():
@@ -44,8 +45,16 @@ func parser(tokens):
 			execute(token['value'])
 			
 func execute(keyword):
-	if keyword == 'QUIT':
-		quit()
-		
+	call(keyword.to_lower())
+
+func build():
+	var server   = load('res://server.tscn')
+	var instance = server.instance()
+	
+	instance.set_translation(Vector3(10, 1, 5))
+	get_node(".").call_deferred('add_child', instance)
+	
+	print('Built a server!')
+
 func quit():
 	get_tree().quit()
