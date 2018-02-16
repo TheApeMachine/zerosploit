@@ -1,9 +1,14 @@
 extends TextEdit
 
 var cmd      = ""
+var pbuf     = false
+var tokens   = []
+var AST      = []
 var keywords = [
 	'QUIT',
-	'BUILD'
+	'BUILD',
+	'PROGRAM',
+	'END PROGRAM'
 ]
 
 func _ready():
@@ -25,20 +30,26 @@ func _input(event):
 			cmd += event.as_text()
 
 func lexer(input):
-	var tokens = []
-	var lex    = ""
+	var lex = ""
 	
 	for i in input:
 		lex += i
 		
 		if lex in keywords:
-			tokens.append({'id': 'keyword', 'value': lex})
-			
-	parser(tokens)
+			if lex == 'PROGRAM':
+				pbuf = true
+			elif lex == 'END PROGRAM':
+				pbuf = false
+			else:
+				tokens.append({'id': 'keyword', 'value': lex})
 	
-func parser(tokens):
+	if pbuf is false:
+		parser()
+	
+func parser():
 	print(tokens)
-	var AST = []
+	
+	# TODO: Build actual AST
 	
 	for token in tokens:
 		if token['id'] == 'keyword':
@@ -46,6 +57,9 @@ func parser(tokens):
 			
 func execute(keyword):
 	call(keyword.to_lower())
+	
+	tokens = []
+	AST    = []
 
 func build():
 	var server   = load('res://server.tscn')
