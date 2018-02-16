@@ -1,15 +1,16 @@
 extends TextEdit
 
-var tokens = {}
-var AST    = []
-var cmd    = ""
+var cmd      = ""
+var keywords = [
+	'QUIT'
+]
 
 func _ready():
 	insert_text_at_cursor(">")
 	
 func _input(event):
 	if Input.is_key_pressed(KEY_ENTER):
-		lexer(cmd)
+		lexer(cmd.to_upper())
 		cmd = ""
 		insert_text_at_cursor(">")
 	elif !event.is_pressed() and !event.is_class("InputEventMouseMotion"):
@@ -23,7 +24,28 @@ func _input(event):
 			cmd += event.as_text()
 
 func lexer(input):
-	print(input)
+	var tokens = []
+	var lex    = ""
 	
-func parser():
-	pass
+	for i in input:
+		lex += i
+		
+		if lex in keywords:
+			tokens.append({'id': 'keyword', 'value': lex})
+			
+	parser(tokens)
+	
+func parser(tokens):
+	print(tokens)
+	var AST = []
+	
+	for token in tokens:
+		if token['id'] == 'keyword':
+			execute(token['value'])
+			
+func execute(keyword):
+	if keyword == 'QUIT':
+		quit()
+		
+func quit():
+	get_tree().quit()
