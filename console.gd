@@ -43,20 +43,35 @@ func lexer(input):
 			else:
 				tokens.append({'id': 'keyword', 'value': lex})
 	
-	if pbuf is false:
+	if pbuf == false:
 		parser()
 	
 func parser():
-	print(tokens)
+	print("TOKENS: ", tokens)
 	
 	# TODO: Build actual AST
 	
 	for token in tokens:
 		if token['id'] == 'keyword':
-			execute(token['value'])
+			AST.append(token['value'])
 			
-func execute(keyword):
-	call(keyword.to_lower())
+	run()
+
+func add_ast_node(parent, node):
+	for a in AST:
+		if parent in a:
+			a[parent].append(node)
+
+func run(ast=AST):
+	print("AST: ", ast)
+	
+	for a in ast:
+		if typeof(a) == TYPE_DICTIONARY:
+			pass
+		elif typeof(a) == TYPE_ARRAY:
+			pass
+		else:
+			call(a.to_lower())
 	
 	tokens = []
 	AST    = []
