@@ -9,17 +9,20 @@ var keywords = [
 	'QUIT',
 	'BUILD',
 	'PROGRAM',
-	'END PROGRAM'
+	'END PROGRAM',
+	'SCAN'
 ]
 
 func _ready():
 	insert_text_at_cursor(">")
+	set_process_input(true)
+	set_process(false)
 	
 func _input(event):
 	if Input.is_key_pressed(KEY_ENTER):
 		lexer(cmd.to_upper())
 		cmd = ""
-		insert_text_at_cursor(">")
+		set_process(true)
 	elif !event.is_pressed() and !event.is_class("InputEventMouseMotion"):
 		var e = event.as_text()
 		
@@ -31,6 +34,10 @@ func _input(event):
 			pass
 		else:
 			cmd += event.as_text()
+
+func _process(delta):
+	insert_text_at_cursor(">")
+	set_process(false)
 
 func lexer(input):
 	lex = ""
@@ -92,6 +99,13 @@ func build():
 	
 	print('Built a server!')
 	print(root.players)
+	
+func scan():
+	var root 	= get_parent()
+	var players = root.players
+	
+	for p in players:
+		print(p.ping(), ' from ', PoolStringArray(p.ip).join('.'))
 
 func quit():
 	get_tree().quit()
