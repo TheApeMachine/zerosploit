@@ -16,14 +16,13 @@ var keywords = [
 
 func _ready():
 	insert_text_at_cursor(">")
-	set_process_input(true)
-	set_process(false)
 	
 func _input(event):
 	if Input.is_key_pressed(KEY_ENTER):
+		get_tree().set_input_as_handled()
+		insert_text_at_cursor("\n>")
 		lexer(cmd.to_upper())
 		cmd = ""
-		set_process(true)
 	elif !event.is_pressed() and !event.is_class("InputEventMouseMotion"):
 		var e = event.as_text()
 		
@@ -35,10 +34,6 @@ func _input(event):
 			pass
 		else:
 			cmd += event.as_text()
-
-func _process(delta):
-	insert_text_at_cursor(">")
-	set_process(false)
 
 func lexer(input):
 	lex = ""
