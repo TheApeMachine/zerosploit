@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://main.gd" type="Script" id=1]
 [ext_resource path="res://Camera.gd" type="Script" id=2]
 [ext_resource path="res://grid.gd" type="Script" id=3]
 [ext_resource path="res://console.gd" type="Script" id=4]
+[ext_resource path="res://network.gd" type="Script" id=5]
 
 [sub_resource type="Environment" id=1]
 
@@ -159,5 +160,9 @@ caret_blink_speed = 0.65
 caret_moving_by_right_click = true
 script = ExtResource( 4 )
 _sections_unfolded = [ "Material", "Visibility" ]
+
+[node name="network" type="Node" parent="." index="3"]
+
+script = ExtResource( 5 )
 
 
