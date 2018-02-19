@@ -1,5 +1,6 @@
 extends TextEdit
 
+var shown    = false
 var cmd      = ""
 var lex      = ""
 var pbuf     = false
@@ -40,7 +41,7 @@ func _input(event):
 			cmd += ' '
 		elif e == 'BackSpace':
 			cmd = cmd.left(len(cmd) - 1)
-		elif e == 'Enter':
+		elif e == 'Enter' or e == 'Down' or e == 'Up' or e == 'Left' or e == 'Right':
 			pass
 		else:
 			cmd += event.as_text()

@@ -27,16 +27,22 @@ var dir = {
 	]
 }
 
-var direct = ["N", "W", "S", "O"]
-var move   = "stop"
-var step   = 0
-var pos    = Vector3(10, 1, 10)
-var rotL   = 0;
-var rotR   = 0;
-var id     = {16777232:0, 16777234:1, 16777231:2, 16777233:3}
+var direct  = ["N", "W", "S", "O"]
+var move    = "stop"
+var step    = 0
+var pos     = Vector3(10, 1, 10)
+var rotL    = 0;
+var rotR    = 0;
+var id      = {16777232:0, 16777234:1, 16777231:2, 16777233:3}
+var root    = false
+var console = false
 
 func _ready():
 	self.set_translation(Vector3(pos.x, 1, pos.x))
+	
+	root    = get_parent()
+	console = root.get_node('console')
+	
 	set_process(true)
 
 func step_mov(key):
@@ -78,8 +84,12 @@ func rot():
 		self.rotate(Vector3(0, 1, 0), 0.0157)
 		
 func _process(delta):
-	step_mov(KEY_UP)
-	step_mov(KEY_DOWN)
-	step_mov(KEY_LEFT)
-	step_mov(KEY_RIGHT)
-	rot()
+	if console && console.shown:
+		pass
+	else:
+		step_mov(KEY_UP)
+		step_mov(KEY_DOWN)
+		step_mov(KEY_LEFT)
+		step_mov(KEY_RIGHT)
+		rot()
+		

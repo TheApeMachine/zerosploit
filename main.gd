@@ -18,6 +18,7 @@ func _input(event):
 		if console_show == false:
 			$console.show()
 			$console.grab_focus()
+			$console.shown = true
 			
 func _on_timecop_timeout():
 	for player in players:

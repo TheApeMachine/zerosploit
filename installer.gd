@@ -24,7 +24,7 @@ func portscan():
 	
 	if root.money - price >= 0:
 		console.echo("Installing portscan...")
-		itimer.set_wait_time(3)
+		itimer.set_wait_time(1)
 		itimer.connect("timeout", self, "_on_install_timeout")
 		add_child(itimer)
 		itimer.start()
