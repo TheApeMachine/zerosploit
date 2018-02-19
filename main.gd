@@ -8,7 +8,7 @@ var timecop      = Timer.new()
 
 func _ready():
 	$console.hide()
-	timecop.set_wait_time(10)
+	timecop.set_wait_time(60)
 	timecop.connect("timeout", self, "_on_timecop_timeout")
 	add_child(timecop)
 	timecop.start()

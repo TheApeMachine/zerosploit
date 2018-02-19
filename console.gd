@@ -124,6 +124,14 @@ func build(type):
 			print('Built a server!')
 		else:
 			echo("insufficient funds!")
+			
+func config(server):
+	var root    = get_parent()
+	var players = root.players
+	
+	for p in players:
+		if PoolStringArray(p.ip) == server.split('period'):
+			p.config()
 	
 func scan():
 	var root    = get_parent()
@@ -132,5 +140,5 @@ func scan():
 	for p in players:
 		print(p.ping(), ' from ', PoolStringArray(p.ip).join('.'))
 
-func quit():
+func quit(return_code):
 	get_tree().quit()
