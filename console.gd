@@ -106,20 +106,24 @@ func echo(string):
 func build(type):
 	var root     = get_parent()
 	var server   = load(str('res://', type, '.tscn'))
-	var instance = server.instance()
 	
-	if root.money - instance.price >= 0:
-		instance.set_translation(Vector3(10, 1, 5))
-		root.call_deferred('add_child', instance)
-	
-		root.players.append(instance)
-	
-		print('Built a server!')
+	if server == null:
+		echo("resource not found!")
 	else:
-		echo("insufficient funds!")
+		var instance = server.instance()
+		
+		if root.money - instance.price >= 0:
+			instance.set_translation(Vector3(10, 1, 5))
+			root.call_deferred('add_child', instance)
+		
+			root.players.append(instance)
+		
+			print('Built a server!')
+		else:
+			echo("insufficient funds!")
 	
 func scan():
-	var root 	= get_parent()
+	var root    = get_parent()
 	var players = root.players
 	
 	for p in players:
