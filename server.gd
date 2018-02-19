@@ -1,7 +1,9 @@
 extends Spatial
 
-var price = 100
-var ip    = [1, 0, 0, 0]
+var price       = 100
+var ip          = [1, 0, 0, 0]
+var connections = []
+var delete_tag  = false
 
 func _ready():
 	randomize()

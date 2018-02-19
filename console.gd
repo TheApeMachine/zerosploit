@@ -11,7 +11,8 @@ var keywords = [
 	'PROGRAM',
 	'END PROGRAM',
 	'SCAN',
-	'ECHO'
+	'ECHO',
+	'CONFIG'
 ]
 
 func _ready():
@@ -104,8 +105,8 @@ func echo(string):
 	insert_text_at_cursor(str("\n", string, "\n"))
 
 func build(type):
-	var root     = get_parent()
-	var server   = load(str('res://', type, '.tscn'))
+	var root   = get_parent()
+	var server = load(str('res://', type, '.tscn'))
 	
 	if server == null:
 		echo("resource not found!")
@@ -115,9 +116,8 @@ func build(type):
 		if root.money - instance.price >= 0:
 			instance.set_translation(Vector3(10, 1, 5))
 			root.call_deferred('add_child', instance)
-		
 			root.players.append(instance)
-		
+			
 			print('Built a server!')
 		else:
 			echo("insufficient funds!")
