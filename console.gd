@@ -116,7 +116,7 @@ func build(type):
 		
 		if root.money - instance.price >= 0:
 			var trans = camera.get_global_transform().origin - Vector3(0, 0, 5)
-			print("DEBUG POSITION: ", trans)
+			
 			instance.set_translation(trans)
 			root.call_deferred('add_child', instance)
 			root.players.append(instance)
