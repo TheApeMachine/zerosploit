@@ -18,6 +18,10 @@ func _ready():
 func portscan():
 	var price = 10
 	
+	if root == false:
+		root    = get_parent()
+		console = root.get_node('console')
+	
 	if root.money - price >= 0:
 		console.echo("Installing portscan...")
 		itimer.set_wait_time(3)

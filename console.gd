@@ -19,6 +19,11 @@ var keywords = [
 ]
 
 func _ready():
+	var init = load_file('console.rc').split("\n")
+	
+	for i in init:
+		lexer(i.to_upper() + "\n")
+	
 	insert_text_at_cursor(">")
 	
 func _input(event):
@@ -109,6 +114,17 @@ func echo(string):
 	
 func list(target):
 	echo("console.rc")
+
+func load_file(filename):
+	var file    = File.new()
+	var content = ""
+	
+	print("FILE DEBUG: ", filename.replace("period", "."))
+	file.open(str('res://', filename.replace("period", ".")), file.READ)
+	content = file.get_as_text()
+	file.close()
+	
+	return content
 	
 func edit(filename):
 	var file = File.new()
