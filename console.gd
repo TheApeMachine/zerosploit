@@ -13,7 +13,9 @@ var keywords = [
 	'SCAN',
 	'ECHO',
 	'CONFIG',
-	'INSTALL'
+	'INSTALL',
+	'LIST',
+	'EDIT'
 ]
 
 func _ready():
@@ -104,6 +106,17 @@ func run(ast=AST):
 	
 func echo(string):
 	insert_text_at_cursor(str("\n", string, "\n"))
+	
+func list(target):
+	echo("console.rc")
+	
+func edit(filename):
+	var file = File.new()
+	print("FILE DEBUG: ", filename.replace("period", "."))
+	file.open(str('res://', filename.replace("period", ".")), file.READ)
+	print(file.get_as_text())
+	echo(file.get_as_text())
+	file.close()
 	
 func install(package):
 	var root      = get_parent()

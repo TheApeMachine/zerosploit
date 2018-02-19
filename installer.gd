@@ -2,25 +2,24 @@ extends Node
 
 var root    = false
 var console = false
-var steps   = []
 var step    = 0
 var itimer  = Timer.new()
+var steps   = [
+	'Downloading...',
+	'Configuring...',
+	'Compiling...',
+	'Installed!'
+]
 
 func _ready():
-	root     = get_parent()
-	console  = root.get_node('console')
+	root    = get_parent()
+	console = root.get_node('console')
 
 func portscan():
 	var price = 10
-	steps     = [
-		'Installing portscan...',
-		'Downloading...',
-		'Configuring...',
-		'Compiling...',
-		'Installed!'
-	]
 	
 	if root.money - price >= 0:
+		console.echo("Installing portscan...")
 		itimer.set_wait_time(3)
 		itimer.connect("timeout", self, "_on_install_timeout")
 		add_child(itimer)
@@ -34,3 +33,4 @@ func _on_install_timeout():
 		step += 1
 	else:
 		itimer.stop()
+		step = 0
