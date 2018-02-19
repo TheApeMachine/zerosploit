@@ -43,6 +43,9 @@ func _input(event):
 			cmd = cmd.left(len(cmd) - 1)
 		elif e == 'Enter' or e == 'Down' or e == 'Up' or e == 'Left' or e == 'Right':
 			pass
+		elif e == 'Escape':
+			hide()
+			shown = false
 		else:
 			cmd += event.as_text()
 

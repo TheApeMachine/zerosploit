@@ -14,7 +14,7 @@ func _ready():
 	timecop.start()
 
 func _input(event):
-	if event.is_pressed():
+	if event.is_pressed() && !Input.is_key_pressed(16777232) && !Input.is_key_pressed(16777234) && !Input.is_key_pressed(16777231) && !Input.is_key_pressed(16777233):
 		if console_show == false:
 			$console.show()
 			$console.grab_focus()
