@@ -19,6 +19,7 @@ func _ready():
 	
 func _input(event):
 	if Input.is_key_pressed(KEY_ENTER):
+		cmd += "\n"
 		get_tree().set_input_as_handled()
 		insert_text_at_cursor("\n>")
 		lexer(cmd.to_upper())
@@ -37,20 +38,28 @@ func _input(event):
 
 func lexer(input):
 	lex = ""
-	
-	for i in input:
-		lex += i
-		print(lex)
-		
-		if lex in keywords:
-			if lex == 'PROGRAM':
-				pbuf = true
-				print("Program buffer started...")
-			elif lex == 'END PROGRAM':
-				pbuf = false
-				print("Program buffer ended.")
+
+	for words in input.split(' '):
+		for i in words:
+			lex += i
+			print(lex)
+			
+			if lex in keywords:
+				if lex == 'PROGRAM':
+					pbuf = true
+					lex  = ""
+					print("Program buffer started...")
+				elif lex == 'END PROGRAM':
+					pbuf = false
+					lex  = ""
+					print("Program buffer ended.")
+				else:
+					tokens.append({'id': 'keyword', 'value': lex})
+					lex = ""
 			else:
-				tokens.append({'id': 'keyword', 'value': lex})
+				if lex.right(len(lex) - 1) == "\n":
+					tokens.append({'id': 'argument', 'value': lex.left(len(lex) - 1)})
+					lex = ""
 	
 	if pbuf == false:
 		parser()
@@ -58,9 +67,16 @@ func lexer(input):
 func parser():
 	print("TOKENS: ", tokens)
 	
+	var cur_node = ""
+	
 	for token in tokens:
 		if token['id'] == 'keyword':
-			AST.append(token['value'])
+			var val  = token['value']
+			cur_node = val
+			
+			AST.append({val: []})
+		elif token['id'] == 'argument':
+			add_ast_node(cur_node, token['value'])
 		
 	run()
 
@@ -74,9 +90,10 @@ func run(ast=AST):
 	
 	for a in ast:
 		if typeof(a) == TYPE_DICTIONARY:
-			pass
+			for k in a:
+				call(k.to_lower(), PoolStringArray(a[k]).join(', ').to_lower())
 		elif typeof(a) == TYPE_ARRAY:
-			pass
+			print("DEBUG AST ARRAY: ", a)
 		else:
 			call(a.to_lower())
 	
@@ -86,9 +103,9 @@ func run(ast=AST):
 func echo(string):
 	insert_text_at_cursor(str("\n", string, "\n"))
 
-func build():
+func build(type):
 	var root     = get_parent()
-	var server   = load('res://server.tscn')
+	var server   = load(str('res://', type, '.tscn'))
 	var instance = server.instance()
 	
 	if root.money - instance.price >= 0:
