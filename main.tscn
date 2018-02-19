@@ -1,11 +1,13 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://main.gd" type="Script" id=1]
 [ext_resource path="res://Camera.gd" type="Script" id=2]
 [ext_resource path="res://grid.gd" type="Script" id=3]
-[ext_resource path="res://console.gd" type="Script" id=4]
-[ext_resource path="res://network.gd" type="Script" id=5]
-[ext_resource path="res://installer.gd" type="Script" id=6]
+[ext_resource path="res://F25_Bank_Printer.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://console.gd" type="Script" id=5]
+[ext_resource path="res://network.gd" type="Script" id=6]
+[ext_resource path="res://installer.gd" type="Script" id=7]
+[ext_resource path="res://editor.gd" type="Script" id=8]
 
 [sub_resource type="Environment" id=1]
 
@@ -92,6 +94,14 @@ render_priority = 0
 blend_mode = 0
 light_mode = 0
 
+[sub_resource type="DynamicFont" id=3]
+
+size = 12
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 4 )
+_sections_unfolded = [ "Font", "Resource", "Settings" ]
+
 [node name="root" type="Spatial" index="0"]
 
 script = ExtResource( 1 )
@@ -142,6 +152,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
+custom_fonts/font = SubResource( 3 )
 custom_colors/background_color = Color( 0, 0, 0, 0.602196 )
 text = ""
 readonly = false
@@ -159,15 +170,19 @@ caret_block_mode = true
 caret_blink = true
 caret_blink_speed = 0.65
 caret_moving_by_right_click = true
-script = ExtResource( 4 )
-_sections_unfolded = [ "Material", "Visibility" ]
+script = ExtResource( 5 )
+_sections_unfolded = [ "Material", "Visibility", "custom_fonts" ]
 
 [node name="network" type="Node" parent="." index="3"]
 
-script = ExtResource( 5 )
+script = ExtResource( 6 )
 
 [node name="installer" type="Node" parent="." index="4"]
 
-script = ExtResource( 6 )
+script = ExtResource( 7 )
+
+[node name="editor" type="Node" parent="." index="5"]
+
+script = ExtResource( 8 )
 
 

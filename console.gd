@@ -127,12 +127,11 @@ func load_file(filename):
 	return content
 	
 func edit(filename):
-	var file = File.new()
-	print("FILE DEBUG: ", filename.replace("period", "."))
-	file.open(str('res://', filename.replace("period", ".")), file.READ)
-	print(file.get_as_text())
-	echo(file.get_as_text())
-	file.close()
+	var root    = get_parent()
+	var editor  = root.get_node('editor')
+	var content = load_file(filename)
+	
+	editor.edit(content)
 	
 func install(package):
 	var root      = get_parent()
