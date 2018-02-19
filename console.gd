@@ -12,7 +12,8 @@ var keywords = [
 	'END PROGRAM',
 	'SCAN',
 	'ECHO',
-	'CONFIG'
+	'CONFIG',
+	'INSTALL'
 ]
 
 func _ready():
@@ -22,7 +23,7 @@ func _input(event):
 	if Input.is_key_pressed(KEY_ENTER):
 		cmd += "\n"
 		get_tree().set_input_as_handled()
-		insert_text_at_cursor("\n>")
+		insert_text_at_cursor(">")
 		lexer(cmd.to_upper())
 		cmd = ""
 	elif !event.is_pressed() and !event.is_class("InputEventMouseMotion"):
@@ -103,6 +104,12 @@ func run(ast=AST):
 	
 func echo(string):
 	insert_text_at_cursor(str("\n", string, "\n"))
+	
+func install(package):
+	var root      = get_parent()
+	var installer = root.get_node('installer')
+	
+	installer.call(package)
 
 func build(type):
 	var root   = get_parent()
