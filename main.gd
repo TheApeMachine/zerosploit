@@ -28,7 +28,7 @@ func _on_timecop_timeout():
 				$console.echo("Zombie (unconnected) instance(s) in your network!")
 				$console.echo("Tagged for deletion at next timecop run...")
 			else:
-				players.remove(player)
+				players.erase(player)
 				player.queue_free()
 				
 				$console.echo("Zombie instance(s) deleted!")
