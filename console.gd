@@ -10,7 +10,8 @@ var keywords = [
 	'BUILD',
 	'PROGRAM',
 	'END PROGRAM',
-	'SCAN'
+	'SCAN',
+	'ECHO'
 ]
 
 func _ready():
@@ -86,19 +87,24 @@ func run(ast=AST):
 	
 	tokens = []
 	AST    = []
+	
+func echo(string):
+	insert_text_at_cursor(str("\n", string, "\n"))
 
 func build():
 	var root     = get_parent()
 	var server   = load('res://server.tscn')
 	var instance = server.instance()
 	
-	instance.set_translation(Vector3(10, 1, 5))
-	root.call_deferred('add_child', instance)
+	if root.money - instance.price >= 0:
+		instance.set_translation(Vector3(10, 1, 5))
+		root.call_deferred('add_child', instance)
 	
-	root.players.append(instance)
+		root.players.append(instance)
 	
-	print('Built a server!')
-	print(root.players)
+		print('Built a server!')
+	else:
+		echo("insufficient funds!")
 	
 func scan():
 	var root 	= get_parent()
