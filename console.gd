@@ -106,6 +106,7 @@ func echo(string):
 
 func build(type):
 	var root   = get_parent()
+	var camera = root.get_node('Camera')
 	var server = load(str('res://', type, '.tscn'))
 	
 	if server == null:
@@ -114,7 +115,9 @@ func build(type):
 		var instance = server.instance()
 		
 		if root.money - instance.price >= 0:
-			instance.set_translation(Vector3(10, 1, 5))
+			var trans = camera.get_global_transform().origin - Vector3(0, 0, 5)
+			print("DEBUG POSITION: ", trans)
+			instance.set_translation(trans)
 			root.call_deferred('add_child', instance)
 			root.players.append(instance)
 			

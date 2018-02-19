@@ -33,7 +33,7 @@ var step   = 0
 var pos    = Vector3(10, 1, 10)
 var rotL   = 0;
 var rotR   = 0;
-var id     = {87:0, 83:1, 65:2, 68:3}
+var id     = {16777232:0, 16777234:1, 16777231:2, 16777233:3}
 
 func _ready():
 	self.set_translation(Vector3(pos.x, 1, pos.x))
@@ -53,7 +53,7 @@ func step_mov(key):
 		self.set_translation(Vector3(pos.x, 1, pos.z))
 		
 func rot():
-	if (Input.is_key_pressed(KEY_Q)) and step == 0 and rotR == 0 or rotL != 0:
+	if (Input.is_key_pressed(16777235)) and step == 0 and rotR == 0 or rotL != 0:
 		if rotL == 0:
 			direct.push_back(direct[0])
 			direct.pop_front()
@@ -65,7 +65,7 @@ func rot():
 			
 		self.rotate(Vector3(0, 1, 0), -0.0157)
 		
-	if (Input.is_key_pressed(KEY_E)) and step == 0 and rotL == 0 or rotR != 0:
+	if (Input.is_key_pressed(16777236)) and step == 0 and rotL == 0 or rotR != 0:
 		if rotR == 0:
 			direct.push_front(direct[3])
 			direct.pop_back()
@@ -78,8 +78,8 @@ func rot():
 		self.rotate(Vector3(0, 1, 0), 0.0157)
 		
 func _process(delta):
-	step_mov(KEY_W)
-	step_mov(KEY_S)
-	step_mov(KEY_A)
-	step_mov(KEY_D)
+	step_mov(KEY_UP)
+	step_mov(KEY_DOWN)
+	step_mov(KEY_LEFT)
+	step_mov(KEY_RIGHT)
 	rot()
