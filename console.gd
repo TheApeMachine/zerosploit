@@ -190,7 +190,7 @@ func edit(filename):
 	var content = load_file(filename)
 	
 	editing = true
-	editor.edit(content)
+	editor.edit(content, filename)
 	
 func install(package):
 	var root      = get_parent()

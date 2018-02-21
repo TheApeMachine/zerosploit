@@ -108,3 +108,18 @@ Save this file? (Y/n):
 install portscan
 
 Save this file? (Y/n): 
+[2018/2/21 @ 14:2:12] server instantiated: [208, 74, 138, 101]
+[2018/2/21 @ 14:2:24] EDIT CONSOLEPeriodRC
+
+[2018/2/21 @ 16:29:54] Installing portscan...
+[2018/2/21 @ 16:29:54] server instantiated: [68, 161, 210, 139]
+[2018/2/21 @ 16:29:55] Downloading...
+[2018/2/21 @ 16:29:56] Configuring...
+[2018/2/21 @ 16:29:57] Compiling...
+[2018/2/21 @ 16:29:58] Installed!
+[2018/2/21 @ 16:30:3] EDIT TESTPeriodTXT
+
+[2018/2/21 @ 16:35:17] EDIT TESTPeriodTXT
+
+[2018/2/21 @ 16:35:54] EDIT TESTINGPeriodTXT
+
