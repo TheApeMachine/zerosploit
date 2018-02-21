@@ -1,6 +1,7 @@
 extends TextEdit
 
 var shown    = false
+var editing  = false
 var cmd      = ""
 var lex      = ""
 var pbuf     = false
@@ -28,30 +29,31 @@ func _ready():
 	insert_text_at_cursor(">")
 	
 func _input(event):
-	if Input.is_key_pressed(KEY_ENTER):
-		cmd += "\n"
-		get_tree().set_input_as_handled()
-		insert_text_at_cursor(">")
-		lexer(cmd.to_upper())
-		cmd = ""
-	elif !event.is_pressed() and !event.is_class("InputEventMouseMotion"):
-		var e = event.as_text()
-		
-		if e == 'Space':
-			cmd += ' '
-		elif e == 'BackSpace':
-			cmd = cmd.left(len(cmd) - 1)
-		elif e == 'Enter' or e == 'Down' or e == 'Up' or e == 'Left' or e == 'Right':
-			pass
-		elif e == 'Escape':
-			hide()
-			shown = false
-		elif e == 'Tab':
+	if editing == false:
+		if Input.is_key_pressed(KEY_ENTER):
+			cmd += "\n"
 			get_tree().set_input_as_handled()
-			tab_complete()
-		else:
-			cmd += event.as_text()
+			insert_text_at_cursor(">")
+			lexer(cmd.to_upper())
+			cmd = ""
+		elif !event.is_pressed() and !event.is_class("InputEventMouseMotion"):
+			var e = event.as_text()
 			
+			if e == 'Space':
+				cmd += ' '
+			elif e == 'BackSpace':
+				cmd = cmd.left(len(cmd) - 1)
+			elif e == 'Enter' or e == 'Down' or e == 'Up' or e == 'Left' or e == 'Right':
+				pass
+			elif e == 'Escape':
+				hide()
+				shown = false
+			elif e == 'Tab':
+				get_tree().set_input_as_handled()
+				tab_complete()
+			else:
+				cmd += event.as_text()
+				
 func lexer(input):
 	lex = ""
 
@@ -165,6 +167,7 @@ func edit(filename):
 	var editor  = root.get_node('editor')
 	var content = load_file(filename)
 	
+	editing = true
 	editor.edit(content)
 	
 func install(package):
