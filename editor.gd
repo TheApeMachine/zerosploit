@@ -37,10 +37,13 @@ func ask_save():
 	console.insert_text_at_cursor("\nSave this file? (Y/n): ")
 	
 func save_file():
-	var root     = get_parent()
-	var console  = root.get_node('console')
-	var file     = File.new()
-	console.text = ''
+	var root    = get_parent()
+	var console = root.get_node('console')
+	var file    = File.new()
+	
+	console.text                = ''
+	console.show_line_numbers   = false
+	console.syntax_highlighting = false
 	
 	file.open(str('res://filesystem/', f_name.replace('period', '.')), file.WRITE)
 	file.store_string(save_buf)

@@ -200,7 +200,7 @@ func install(package):
 
 func build(type):
 	var root   = get_parent()
-	var camera = root.get_node('Camera')
+	var camera = root.get_node('player')
 	var server = load(str('res://', type, '.tscn'))
 	
 	if server == null:

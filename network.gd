@@ -1,5 +1,6 @@
 extends Node
 
+var host        = null
 var player_info = {}
 var my_info     = {
 	name      = "Test Player",
@@ -15,6 +16,19 @@ func _ready():
 	tree.connect("connected_to_server", self, "_connected_ok")
 	tree.connect("connection_failed", self, "_connected_fail")
 	tree.connect("server_disconnected", self, "_server_disconnected")
+	
+func start_server():
+	host = NetworkedMultiplayerENet.new()
+	host.set_compression_mode(NetworkedMultiplayerENet.COMPRESS_ZLIB)
+	
+	var err = host.create_server(33339, 10)
+	
+	if err != OK:
+		print("Address in use!")
+		return
+		
+	get_tree().set_network_peer(host)
+	print("Waiting for other players...")
 	
 func _player_connected(id):
 	pass

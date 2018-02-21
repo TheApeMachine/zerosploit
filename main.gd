@@ -12,6 +12,7 @@ func _ready():
 	timecop.connect("timeout", self, "_on_timecop_timeout")
 	add_child(timecop)
 	timecop.start()
+	$network.start_server()
 
 func _input(event):
 	if event.is_pressed() && !Input.is_key_pressed(16777232) && !Input.is_key_pressed(16777234) && !Input.is_key_pressed(16777231) && !Input.is_key_pressed(16777233):
