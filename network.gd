@@ -30,6 +30,13 @@ func start_server():
 	get_tree().set_network_peer(host)
 	print("Waiting for other players...")
 	
+func join_server():
+	host = NetworkedMultiplayerENet.new()
+	host.set_compression_mode(NetworkedMultiplayerENet.COMPRESS_ZLIB)
+	host.create_client(ip, 33339)
+	get_tree().set_network_peer(host)
+	print("Connecting...")
+	
 func _player_connected(id):
 	pass
 	
