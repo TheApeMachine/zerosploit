@@ -46,9 +46,14 @@ func _input(event):
 		elif e == 'Escape':
 			hide()
 			shown = false
+		elif e == 'Tab':
+			tab_complete()
 		else:
 			cmd += event.as_text()
-
+			
+func tab_complete():
+	pass
+	
 func lexer(input):
 	lex = ""
 
@@ -117,14 +122,29 @@ func echo(string):
 	insert_text_at_cursor(str("\n", string, "\n"))
 	
 func list(target):
-	echo("console.rc")
+	var files = []
+	var dir   = Directory.new()
+	dir.open(str("filesystem/", target))
+	dir.list_dir_begin()
+	
+	while true:
+		var file = dir.get_next()
+		
+		if file == "":
+			break
+		elif not file.begins_with("."):
+			files.append(file)
+			
+	dir.list_dir_end()
+	
+	echo(files)
 
 func load_file(filename):
 	var file    = File.new()
 	var content = ""
 	
 	print("FILE DEBUG: ", filename.replace("period", "."))
-	file.open(str('res://', filename.replace("period", ".")), file.READ)
+	file.open(str('res://filesystem/', filename.replace("period", ".")), file.READ)
 	content = file.get_as_text()
 	file.close()
 	
