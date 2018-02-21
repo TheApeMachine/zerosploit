@@ -47,13 +47,11 @@ func _input(event):
 			hide()
 			shown = false
 		elif e == 'Tab':
+			get_tree().set_input_as_handled()
 			tab_complete()
 		else:
 			cmd += event.as_text()
 			
-func tab_complete():
-	pass
-	
 func lexer(input):
 	lex = ""
 
@@ -121,7 +119,15 @@ func run(ast=AST):
 func echo(string):
 	insert_text_at_cursor(str("\n", string, "\n"))
 	
-func list(target):
+func tab_complete():
+	var files = read_dir("")
+	
+	for file in files:
+		if cmd.to_lower() == file.left(len(cmd)):
+			cmd += file.right(len(cmd)).to_upper()
+			insert_text_at_cursor(cmd.to_lower())
+	
+func read_dir(target):
 	var files = []
 	var dir   = Directory.new()
 	dir.open(str("filesystem/", target))
@@ -137,8 +143,12 @@ func list(target):
 			
 	dir.list_dir_end()
 	
+	return files
+	
+func list(target):
+	var files = read_dir(target)
 	echo(files)
-
+	
 func load_file(filename):
 	var file    = File.new()
 	var content = ""
