@@ -34,6 +34,7 @@ func _input(event):
 			cmd += "\n"
 			get_tree().set_input_as_handled()
 			insert_text_at_cursor(">")
+			write_log(cmd)
 			lexer(cmd.to_upper())
 			cmd = ""
 		elif !event.is_pressed() and !event.is_class("InputEventMouseMotion"):
@@ -56,7 +57,7 @@ func _input(event):
 				
 func lexer(input):
 	lex = ""
-
+	
 	for words in input.split(' '):
 		for i in words:
 			lex += i
@@ -118,8 +119,29 @@ func run(ast=AST):
 	tokens = []
 	AST    = []
 	
+func write_log(string):
+	var time   = OS.get_time()
+	var hour   = time.hour
+	var minute = time.minute
+	var second = time.second
+	var date   = OS.get_date()
+	var day    = date.day
+	var month  = date.month
+	var year   = date.year
+	var file   = File.new()
+	
+	file.open('res://filesystem/logfile', file.READ_WRITE)
+	file.seek_end()
+	file.store_string(str(
+		'[', year, '/', month, '/', day, ' @ ', hour, ':', minute, ':', second, '] ', string, "\n"
+	))
+	file.close()
+	
 func echo(string):
-	insert_text_at_cursor(str("\n", string, "\n"))
+	write_log(str(string))
+	
+	if editing == false:
+		insert_text_at_cursor(str("\n", string, "\n"))
 	
 func tab_complete():
 	var files = read_dir("")
@@ -195,7 +217,7 @@ func build(type):
 			
 			print('Built a server!')
 		else:
-			echo("insufficient funds!")
+			echo("Insufficient funds!")
 			
 func config(server):
 	var root    = get_parent()
