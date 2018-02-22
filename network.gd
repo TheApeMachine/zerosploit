@@ -60,7 +60,11 @@ remote func register_player(id, new_player_name):
 			rpc_id(p_id, "register_player", id, new_player_name)
 			
 	players[id] = new_player_name
-	rpc("initialize_game")
+
+	if get_tree().is_network_server():
+		initialize_game()
+	else:
+		rpc("initialize_game")
 	
 remote func initialize_game():
 	print("NETWORK: initialize_game()")
@@ -69,6 +73,7 @@ remote func initialize_game():
 		print("NETWORK: initialize_game() - ", p)
 		var player = preload("res://player.tscn").instance()
 		player.set_name(str(p))
+		player.player_id = int(p)
 		
 		get_parent().add_child(player)
 	
