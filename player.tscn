@@ -9,7 +9,7 @@ subdivide_width = 0
 subdivide_height = 0
 subdivide_depth = 0
 
-[node name="root" type="Spatial"]
+[node name="player" type="Spatial"]
 
 script = ExtResource( 1 )
 
@@ -30,6 +30,7 @@ far = 100.0
 
 [node name="MeshInstance" type="MeshInstance" parent="." index="1"]
 
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5.57576 )
 layers = 1
 material_override = null
 cast_shadow = 1
@@ -42,5 +43,6 @@ lod_max_hysteresis = 0.0
 mesh = SubResource( 1 )
 skeleton = NodePath("..")
 material/0 = null
+_sections_unfolded = [ "Transform" ]
 
 
