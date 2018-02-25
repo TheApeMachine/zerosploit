@@ -27,6 +27,7 @@ var dir = {
 	]
 }
 
+var control   = false
 var player_id = 0
 var direct    = ["N", "W", "S", "O"]
 var move      = "stop"
@@ -85,7 +86,7 @@ func rot():
 		self.rotate(Vector3(0, 1, 0), 0.0157)
 		
 func _process(delta):
-	if player_id == get_tree().get_network_unique_id():
+	if control == true:
 		if console && console.shown:
 			pass
 		else:

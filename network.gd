@@ -2,9 +2,7 @@ extends Node
 
 const DEFAULT_PORT = 10567
 const MAX_PEERS    = 10
-
-var player_name = 'server'
-var players     = {}
+var   players      = {}
 
 func _ready():
 	get_tree().connect("network_peer_connected", self, "_player_connected")
@@ -13,17 +11,23 @@ func _ready():
 	get_tree().connect("server_disconnected", self, "_server_disconnect")
 	
 func start_server():
-	player_name= 'Servie'
-	
-	var host = NetworkedMultiplayerENet.new()
-	
-	var err = host.create_server(DEFAULT_PORT, MAX_PEERS)
+	var host    = NetworkedMultiplayerENet.new()
+	var err     = host.create_server(DEFAULT_PORT, MAX_PEERS)
 	
 	if err != OK:
 		print("NETWORK: Network address in use!")
+		join_server()
 		return
 		
 	get_tree().set_network_peer(host)
+	
+	var player     = preload("res://player.tscn").instance()
+	player.control = true
+	players["1"]   = player
+	
+	player.set_name("1")
+	call_deferred('add_child', player)
+	
 	print("NETWORK: Waiting for other players...")
 	
 func join_server():
@@ -37,11 +41,12 @@ func _player_connected(id):
 	print("NETWORK: _player_connected(", id, ")")
 	
 func _player_disconnected(id):
-	players.erase(id)
+	var root = get_parent()
+	root.players.erase(id)
 	
 func _connected_ok():
 	print("NETWORK: _connected_ok()")
-	rpc("register_player", get_tree().get_network_unique_id(), player_name)
+	rpc("register_player", get_tree().get_network_unique_id())
 	
 func _server_disconnected():
 	pass
@@ -49,31 +54,19 @@ func _server_disconnected():
 func _connected_fail():
 	pass
 	
-remote func register_player(id, new_player_name):
-	print("NETWORK: register_player(", id, ", ", new_player_name, ")")
+remote func register_player(id):
+	print("NETWORK: register_player(", id, ")")
 	
 	if get_tree().is_network_server():
-		rpc_id(id, "register_player", 1, player_name)
-		
-		for p_id in players:
-			rpc_id(id, "register_player", p_id, players[id])
-			rpc_id(p_id, "register_player", id, new_player_name)
-			
-	players[id] = new_player_name
-
-	if get_tree().is_network_server():
-		initialize_game()
+		pass
 	else:
-		rpc("initialize_game")
-	
-remote func initialize_game():
-	print("NETWORK: initialize_game()")
-	
-	for p in players:
-		print("NETWORK: initialize_game() - ", p)
-		var player = preload("res://player.tscn").instance()
-		player.set_name(str(p))
-		player.player_id = int(p)
+		pass
 		
-		get_parent().add_child(player)
+	var root = get_parent()
+	
+	for player in root.players:
+		var p = preload("res://player.tscn").instance()
+		
+		p.set_name(str(id))
+		root.add_child(p)
 	
