@@ -90,7 +90,9 @@ func spawn_player(id):
 	
 	if id == get_tree().get_network_unique_id():
 		player.set_network_master(id)
-		player.control = true
+		
+		player.player_id = id
+		player.control   = true
 		
 	get_parent().add_child(player)
 	

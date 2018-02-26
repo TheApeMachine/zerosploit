@@ -46,7 +46,7 @@ func _ready():
 	console = root.get_node('console')
 	
 	set_process(true)
-
+	
 func step_mov(key):
 	if (Input.is_key_pressed(key) and move == "stop") or move == direct[id[key]]:
 		move  = direct[id[key]]
@@ -58,8 +58,17 @@ func step_mov(key):
 			step = 0
 			pos  = Vector3(round(pos.x), 1, round(pos.z))
 		
-		self.set_translation(Vector3(pos.x, 1, pos.z))
+		var movement = Vector3(pos.x, 1, pos.z)
 		
+		set_translation(movement)
+		rpc_unreliable("do_move", movement, player_id)
+		
+remote func do_move(position, pid):
+	var root    = get_parent()
+	var pnode   = root.get_node(str(pid))
+	
+	pnode.set_translation(position)
+	
 func rot():
 	if (Input.is_key_pressed(16777235)) and step == 0 and rotR == 0 or rotL != 0:
 		if rotL == 0:
@@ -95,4 +104,4 @@ func _process(delta):
 			step_mov(KEY_LEFT)
 			step_mov(KEY_RIGHT)
 			rot()
-		
+	
