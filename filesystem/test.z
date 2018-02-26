@@ -1,0 +1,43 @@
+// each loop
+// use for looping over array
+
+[1, 2, 3, 4, 5] {
+  x = [1, 2, 3, 4, 5]
+
+  x <i> {
+    echo i
+  }
+}
+
+// for loop
+// there are no steps, you can use modulo
+
+i = 1 in 10 {
+
+  // if statement
+
+  i % 3 == 0 {
+
+    echo call(add, i, 2)
+
+  } || i % 3 == 1 {
+
+    // or clause with condition
+    // works like else if
+
+    echo i
+
+  } || {
+
+    // or clause
+    // this works like else
+
+    echo i
+
+  }
+}
+
+// subroutine
+
+add(x, y):
+  x + y
