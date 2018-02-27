@@ -38,6 +38,7 @@ var rotR      = 0;
 var id        = {16777232:0, 16777234:1, 16777231:2, 16777233:3}
 var root      = false
 var console   = false
+var tree      = {}
 
 func _ready():
 	self.set_translation(Vector3(pos.x, 1, pos.x))
@@ -64,8 +65,8 @@ func step_mov(key):
 		rpc_unreliable("do_move", movement, player_id)
 		
 remote func do_move(position, pid):
-	var root    = get_parent()
-	var pnode   = root.get_node(str(pid))
+	var root  = get_parent()
+	var pnode = root.get_node(str(pid))
 	
 	pnode.set_translation(position)
 	
