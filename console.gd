@@ -17,7 +17,8 @@ var keywords = [
 	'CONFIG',
 	'INSTALL',
 	'LIST',
-	'EDIT'
+	'EDIT',
+	'LOGIN'
 ]
 
 func _ready():
@@ -190,7 +191,11 @@ func edit(filename):
 	var content = load_file(filename)
 	
 	editing = true
-	editor.edit(content, filename)
+	
+func login(tmp):
+	var root    = get_parent()
+	var account = root.get_node('account')
+	account.login()
 	
 func install(package):
 	var root      = get_parent()
