@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://http.gd" type="Script" id=1]
+
+[node name="HTTPRequest" type="HTTPRequest" index="0"]
+
+download_file = ""
+use_threads = false
+body_size_limit = -1
+max_redirects = 8
+script = ExtResource( 1 )
+
+[connection signal="request_completed" from="." to="." method="_on_HTTPRequest_request_completed"]
+
+

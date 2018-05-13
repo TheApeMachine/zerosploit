@@ -1,11 +1,14 @@
 extends LineEdit
 
-func _ready():
-	var root = get_parent().get_parent().get_parent()
-	var http = root.get_node('HTTPRequest')
-	http.request("http://zerosploit-api.herokuapp.com/ips.json")
+var Http = load("res://http.tscn")
 
-func _on_HTTPRequest_request_completed( result, response_code, headers, body ):
-	var json = JSON.parse(body.get_string_from_utf8())
-	print(json.result)
-	self.text = json.result.ip
+func _ready():
+	var http = get_node("../../../HTTPRequest")
+	http.request("http://zerosploit-api.herokuapp.com/ips.json")
+	var instance = Http.instance()
+	self.add_child(instance)
+	get_node("../LineEdit/HTTPRequest").get("servers.json", self)
+
+func handle_results(results):
+	for server in results:
+		self.text = server.ip

@@ -23,7 +23,7 @@ use_filter = false
 font_data = ExtResource( 3 )
 _sections_unfolded = [ "Font", "Resource", "Settings" ]
 
-[node name="root" type="Spatial" index="0"]
+[node name="root" type="Spatial"]
 
 script = ExtResource( 1 )
 
